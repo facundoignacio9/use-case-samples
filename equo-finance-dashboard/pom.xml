@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.company.finance</groupId>
+    <artifactId>equo-finance-dashboard</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <swt.version>3.121.0</swt.version>
+        <chromium.version>128.0.8</chromium.version>
+        <chromium.platform.version>128.0.8</chromium.platform.version>
+    </properties>
+
+    <repositories>
+		<repository>
+			<id>Equo-Chromium</id>
+			<url>https://dl.equo.dev/chromium-swt-ee/equoSamples/mvn</url>
+		</repository>
+	</repositories>
+
+    <dependencies>
+        <!-- SWT for Windows x86_64 -->
+        <dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.swt</artifactId>
+			<version>${swt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+			<version>${swt.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>com.equo</groupId>
+			<artifactId>com.equo.chromium</artifactId>
+			<version>${chromium.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.equo</groupId>
+			<artifactId>com.equo.chromium.cef.win32.win32.x86_64</artifactId>
+			<version>${chromium.platform.version}</version>
+		</dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- run the SWT app -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-Dchromium.multi_threaded_message_loop=true</argument>
+                        <argument>-Dchromium.debug=true</argument>
+                        <argument>-classpath</argument>
+                        <classpath />
+                        <argument>com.company.finance.EquoFinanceDashboard</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
